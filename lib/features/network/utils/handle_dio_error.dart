@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_c19/features/network/api_result.dart';
-import 'package:ecommerce_c19/features/network/model/response/auth_response.dart';
+import 'package:ecommerce_c19/features/network/model/response/auth/auth_response.dart';
 
 FailureApiResult<T> handleDioError<T>(DioException e) {
   switch (e.type) {

@@ -4,7 +4,7 @@ import 'package:ecommerce_c19/features/network/api/api_services.dart';
 import 'package:ecommerce_c19/features/network/api_result.dart';
 import 'package:ecommerce_c19/features/network/model/request/login_request.dart';
 import 'package:ecommerce_c19/features/network/model/request/register_request.dart';
-import 'package:ecommerce_c19/features/network/model/response/auth_response.dart';
+import 'package:ecommerce_c19/features/network/model/response/auth/auth_response.dart';
 import 'package:ecommerce_c19/features/network/utils/handle_dio_error.dart';
 import 'package:injectable/injectable.dart';
 

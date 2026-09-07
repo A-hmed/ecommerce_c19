@@ -4,27 +4,33 @@ import 'package:flutter/material.dart';
 class RouteLogo extends StatelessWidget {
   final double width;
   final double height;
+  final Color color;
 
   const RouteLogo({
     super.key,
     this.width = 237,
     this.height = 71,
+    this.color = AppColors.white,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(width, height),
-      painter: _RouteLogoPainter(),
+      painter: _RouteLogoPainter(color: color),
     );
   }
 }
 
 class _RouteLogoPainter extends CustomPainter {
+  final Color color;
+
+  _RouteLogoPainter({this.color = AppColors.white});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.white
+      ..color = color
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round
