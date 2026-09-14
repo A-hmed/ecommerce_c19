@@ -1,17 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_c19/features/network/model/request/login_request.dart';
 import 'package:ecommerce_c19/features/network/model/request/register_request.dart';
-import 'package:ecommerce_c19/features/network/model/response/auth_response.dart';
+import 'package:ecommerce_c19/features/network/model/response/auth/auth_response.dart';
+import 'package:ecommerce_c19/features/network/model/response/categories/categories_response.dart';
+import 'package:ecommerce_c19/features/network/model/response/products/products_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-part 'api_services.g.dart';
 
+part 'api_services.g.dart';
 
 @RestApi()
 @injectable
 abstract class ApiServices {
-
   @factoryMethod
   factory ApiServices(Dio dio) = _ApiServices;
 
@@ -20,4 +21,10 @@ abstract class ApiServices {
 
   @POST('auth/signup')
   Future<AuthResponse> register(@Body() RegisterRequest request);
+
+  @GET('categories')
+  Future<CategoriesResponse> getCategories();
+
+  @GET('products')
+  Future<ProductsResponse> getProducts();
 }

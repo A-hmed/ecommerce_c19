@@ -5,6 +5,8 @@ class ApiResult<T> {
 
   String get errorMessage => (this as FailureApiResult).error.message;
 
+  Errors? getError() => (this as FailureApiResult).error;
+
   T? getData() => (this as SuccessApiResult).data;
 }
 

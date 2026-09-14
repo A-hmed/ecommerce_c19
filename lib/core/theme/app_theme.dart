@@ -5,7 +5,7 @@ abstract final class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: AppColors.primary,
+      scaffoldBackgroundColor: AppColors.white,
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.primary,
         elevation: 0,
