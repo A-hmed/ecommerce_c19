@@ -5,5 +5,10 @@ import 'package:ecommerce_c19/features/network/model/response/product/products_r
 abstract class HomeRemoteDataSource {
   Future<ApiResult<CategoriesResponse>> getCategories();
 
-  Future<ApiResult<ProductsResponse>> getProducts();
+  Future<ApiResult<ProductsResponse>> getProducts({
+    String? category,
+    String? subCategory,
+  });
+
+  Future<ApiResult<CategoriesResponse>> getSubCategories(String categoryId);
 }

@@ -9,5 +9,9 @@ class GetProductsUseCase {
 
   GetProductsUseCase(this._repository);
 
-  Future<ApiResult<List<Product>>> call() => _repository.getProducts();
+  Future<ApiResult<List<Product>>> call({
+    String? category,
+    String? subCategory,
+  }) =>
+      _repository.getProducts(category: category, subCategory: subCategory);
 }

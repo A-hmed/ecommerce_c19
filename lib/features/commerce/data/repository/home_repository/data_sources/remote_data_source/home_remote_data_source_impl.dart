@@ -26,9 +26,29 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
   }
 
   @override
-  Future<ApiResult<ProductsResponse>> getProducts() async {
+  Future<ApiResult<ProductsResponse>> getProducts({
+    String? category,
+    String? subCategory,
+  }) async {
     try {
-      var response = await _apiServices.getProducts();
+      print("category = $category");
+      print("subcategory = $subCategory");
+      var response = await _apiServices.getProducts(
+        category: category,
+       // subCategory: subCategory,
+      );
+      return SuccessApiResult(data: response);
+    } on DioException catch (e) {
+      return handleDioError(e);
+    } catch (e) {
+      return FailureApiResult(ServerError());
+    }
+  }
+
+  @override
+  Future<ApiResult<CategoriesResponse>> getSubCategories(String categoryId) async {
+    try {
+      var response = await _apiServices.getSubCategoriesByCategory(categoryId);
       return SuccessApiResult(data: response);
     } on DioException catch (e) {
       return handleDioError(e);

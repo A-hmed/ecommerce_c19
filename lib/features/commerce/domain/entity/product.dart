@@ -9,6 +9,8 @@ class Product {
   final num price;
   final String imageCover;
   final num ratingsAverage;
+  num? totalCartPrice;
+  num cartQty;
 
   Product({
     required this.sold,
@@ -21,5 +23,7 @@ class Product {
     required this.price,
     required this.imageCover,
     required this.ratingsAverage,
+    this.totalCartPrice,
+    this.cartQty = 0,
   });
 }
