@@ -7,6 +7,7 @@ class CategoryDM {
     this.image,
     this.createdAt,
     this.updatedAt,
+    this.category,
   });
 
   CategoryDM.fromJson(dynamic json) {

@@ -26,5 +26,12 @@ abstract class ApiServices {
   Future<CategoriesResponse> getCategories();
 
   @GET('products')
-  Future<ProductsResponse> getProducts();
+  Future<ProductsResponse> getProducts({
+    @Query("category") String? category,
+    // @Query("category") String? subCategory,
+  });
+
+  @GET('categories/{categoryId}/subcategories')
+  Future<CategoriesResponse> getSubCategories(@Path() String categoryId);
+
 }

@@ -36,12 +36,34 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<ApiResult<List<Product>>> getProducts()async {
+  Future<ApiResult<List<Product>>> getProducts({
+    String? category,
+    String? subCategory,
+  }) async {
     try {
-      var apiResult = await _remoteDataSource.getProducts();
+      var apiResult = await _remoteDataSource.getProducts(
+        category: category,
+        subCategory: subCategory,
+      );
       if (apiResult.isSuccess) {
         return SuccessApiResult(
           data: _productsMapper.toEntities(apiResult.getData()!.products!),
+        );
+      } else {
+        return FailureApiResult(apiResult.getError()!);
+      }
+    } catch (e) {
+      return FailureApiResult(ServerError());
+    }
+  }
+
+  @override
+  Future<ApiResult<List<Category>>> getSubCategories(String categoryId) async {
+    try {
+      var apiResult = await _remoteDataSource.getSubCategories(categoryId);
+      if (apiResult.isSuccess) {
+        return SuccessApiResult(
+          data: _categoriesMapper.toEntities(apiResult.getData()?.categories ?? []),
         );
       } else {
         return FailureApiResult(apiResult.getError()!);
