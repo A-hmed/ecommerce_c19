@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_c19/features/network/model/request/cart/add_product_to_cart_request.dart';
+import 'package:ecommerce_c19/features/network/model/request/cart/update_product_qty_request.dart';
 import 'package:ecommerce_c19/features/network/model/request/login_request.dart';
 import 'package:ecommerce_c19/features/network/model/request/register_request.dart';
 import 'package:ecommerce_c19/features/network/model/response/auth/auth_response.dart';
+import 'package:ecommerce_c19/features/network/model/response/cart/cart_response.dart';
 import 'package:ecommerce_c19/features/network/model/response/categories/categories_response.dart';
 import 'package:ecommerce_c19/features/network/model/response/products/products_response.dart';
 import 'package:injectable/injectable.dart';
@@ -34,4 +37,20 @@ abstract class ApiServices {
   @GET('categories/{categoryId}/subcategories')
   Future<CategoriesResponse> getSubCategories(@Path() String categoryId);
 
+  @GET('cart')
+  Future<CartResponse> getCart();
+
+  @POST('cart')
+  Future<CartResponse> addProductToCart(
+    @Body() AddProductToCartRequest request,
+  );
+
+  @POST('cart/{productId}')
+  Future<CartResponse> updateProductQty(
+    @Path() String productId,
+    @Body() UpdateProductQtyRequest request,
+  );
+
+  @DELETE('cart/{productId}')
+  Future<CartResponse> deleteProductFromCart(@Path() String productId);
 }

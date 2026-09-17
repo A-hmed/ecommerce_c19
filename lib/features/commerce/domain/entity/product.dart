@@ -9,8 +9,10 @@ class Product {
   final num price;
   final String imageCover;
   final num ratingsAverage;
+  num cartQuantity = 0;
+  num totalCartPrice = 0;
 
-  const Product({
+   Product({
     required this.sold,
     required this.images,
     required this.ratingsQuantity,
@@ -21,5 +23,7 @@ class Product {
     required this.price,
     required this.imageCover,
     required this.ratingsAverage,
+    this.totalCartPrice = 0,
+    this.cartQuantity = 0,
   });
 }
