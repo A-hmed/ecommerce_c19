@@ -25,6 +25,15 @@ import '../../features/auth/domain/usecase/register_usecase.dart' as _i769;
 import '../../features/auth/ui/screens/login/cubit/login_cubit.dart' as _i413;
 import '../../features/auth/ui/screens/register/cubit/register_cubit.dart'
     as _i113;
+import '../../features/cart/data/mappers/cart_mapper.dart' as _i1002;
+import '../../features/cart/data/repository/cart_repository_impl.dart'
+    as _i1063;
+import '../../features/cart/data/repository/data_source/cart_remote_data_source.dart'
+    as _i747;
+import '../../features/cart/data/repository/data_source/cart_remote_data_source_impl.dart'
+    as _i950;
+import '../../features/cart/domain/repository/cart_repository.dart' as _i26;
+import '../../features/cart/ui/cubit/cart_cubit.dart' as _i779;
 import '../../features/commerce/data/mappers/categories_mapper.dart' as _i340;
 import '../../features/commerce/data/mappers/products_mapper.dart' as _i192;
 import '../../features/commerce/data/repository/home_repository/data_soruces/home_remote_data_source/home_remote_data_source.dart'
@@ -63,9 +72,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i340.CategoriesMapper>(() => _i340.CategoriesMapper());
     gh.factory<_i192.ProductsMapper>(() => _i192.ProductsMapper());
     gh.singleton<_i420.SharedPrefUtils>(() => _i420.SharedPrefUtils());
+    gh.factory<_i1002.CartMapper>(
+      () => _i1002.CartMapper(gh<_i192.ProductsMapper>()),
+    );
     gh.factory<_i392.ApiServices>(() => _i392.ApiServices(gh<_i361.Dio>()));
     gh.factory<_i524.HomeRemoteDataSource>(
       () => _i403.HomeRemoteDataSourceImpl(gh<_i392.ApiServices>()),
+    );
+    gh.factory<_i747.CartRemoteDataSource>(
+      () => _i950.CartRemoteDataSourceImpl(gh<_i392.ApiServices>()),
     );
     gh.factory<_i408.AuthRemoteDataSource>(
       () => _i1068.AuthRemoteDataSourceImpl(gh<_i392.ApiServices>()),
@@ -77,11 +92,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i192.ProductsMapper>(),
       ),
     );
+    gh.factory<_i26.CartRepository>(
+      () => _i1063.CartRepositoryImpl(
+        gh<_i747.CartRemoteDataSource>(),
+        gh<_i1002.CartMapper>(),
+      ),
+    );
     gh.factory<_i961.AuthRepository>(
       () => _i409.AuthRepositoryImpl(
         gh<_i408.AuthRemoteDataSource>(),
         gh<_i420.SharedPrefUtils>(),
       ),
+    );
+    gh.singleton<_i779.CartCubit>(
+      () => _i779.CartCubit(gh<_i26.CartRepository>()),
     );
     gh.factory<_i505.GetCategoriesUseCase>(
       () => _i505.GetCategoriesUseCase(gh<_i457.HomeRepository>()),

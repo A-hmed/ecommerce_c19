@@ -1,9 +1,12 @@
+import 'package:ecommerce_c19/core/di/di.dart';
 import 'package:ecommerce_c19/core/theme/colors.dart';
+import 'package:ecommerce_c19/features/cart/ui/cubit/cart_cubit.dart';
 import 'package:ecommerce_c19/features/commerce/ui/screens/main_tabs_screen/tabs/categories/categories_tab.dart';
 import 'package:ecommerce_c19/features/commerce/ui/screens/main_tabs_screen/tabs/home/home_tab.dart';
 import 'package:ecommerce_c19/features/commerce/ui/screens/main_tabs_screen/tabs/profile/profile_tab.dart';
 import 'package:ecommerce_c19/features/commerce/ui/screens/main_tabs_screen/tabs/wishlist/wishlist_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainTabsScreen extends StatefulWidget {
   const MainTabsScreen({super.key});
@@ -14,6 +17,13 @@ class MainTabsScreen extends StatefulWidget {
 
 class _MainTabsScreenState extends State<MainTabsScreen> {
   int _selectedIndex = 0;
+  CartCubit cubit = getIt();
+
+  @override
+  void initState() {
+    super.initState();
+    cubit.getCart();
+  }
 
   final List<Widget> _tabs = const [
     HomeTab(),

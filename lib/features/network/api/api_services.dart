@@ -41,11 +41,11 @@ abstract class ApiServices {
   Future<CartResponse> getCart();
 
   @POST('cart')
-  Future<CartResponse> addProductToCart(
+  Future<void> addProductToCart(
     @Body() AddProductToCartRequest request,
   );
 
-  @POST('cart/{productId}')
+  @PUT('cart/{productId}')
   Future<CartResponse> updateProductQty(
     @Path() String productId,
     @Body() UpdateProductQtyRequest request,

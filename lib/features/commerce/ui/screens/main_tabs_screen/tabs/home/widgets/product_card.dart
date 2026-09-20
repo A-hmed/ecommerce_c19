@@ -1,6 +1,11 @@
+import 'package:ecommerce_c19/core/di/di.dart';
 import 'package:ecommerce_c19/core/theme/colors.dart';
+import 'package:ecommerce_c19/features/cart/ui/cubit/cart_cubit.dart';
+import 'package:ecommerce_c19/features/cart/ui/cubit/cart_state.dart';
 import 'package:ecommerce_c19/features/commerce/domain/entity/product.dart';
+import 'package:ecommerce_c19/features/common/widgets/qty_control_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -25,7 +30,9 @@ class ProductCard extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(13),
+                ),
                 child: product.imageCover.isNotEmpty
                     ? Image.network(
                         product.imageCover,
@@ -53,10 +60,7 @@ class ProductCard extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.white,
                     boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                      ),
+                      BoxShadow(color: Colors.black12, blurRadius: 4),
                     ],
                   ),
                   child: const Icon(
@@ -119,32 +123,58 @@ class ProductCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 2),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                          size: 14,
-                        ),
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
                       ],
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primary,
-                      ),
-                      child: const Icon(
-                        Icons.add,
-                        color: AppColors.white,
-                        size: 18,
-                      ),
                     ),
                   ],
                 ),
+                buildAddToCartButton(),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget buildAddToCartButton() {
+    var cubit = getIt<CartCubit>();
+    return BlocBuilder<CartCubit, CartState>(
+      builder: (context, state) {
+        print("state.productIds: ${state.productIds}");
+        print("state.cartState.isLoading: ${state.cartState.isLoading}");
+        if(state.cartState.isLoading && state.productIds.contains(product.id)) return CircularProgressIndicator();
+        Product? cartProduct = state.getProductFromCart(product.id);
+        return cartProduct == null
+            ? InkWell(
+                onTap: () {
+                  cubit.addProductToCart(product.id);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary,
+                  ),
+                  child: Icon(Icons.add, color: AppColors.white, size: 18),
+                ),
+              )
+            : QtyControlWidget(
+                qty: cartProduct!.cartQuantity.toInt(),
+                onPlusClick: (qty) {
+                  cubit.updateProductQty(
+                    product.id,
+                    cartProduct!.cartQuantity.toInt() + 1,
+                  );
+                },
+                onMinusClick: (qty) {
+                  cubit.updateProductQty(
+                    product.id,
+                    cartProduct!.cartQuantity.toInt() - 1,
+                  );
+                },
+              );
+      },
     );
   }
 }
