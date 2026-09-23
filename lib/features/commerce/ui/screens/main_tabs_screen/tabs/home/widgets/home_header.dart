@@ -1,3 +1,4 @@
+import 'package:ecommerce_c19/core/routes/app_router.dart';
 import 'package:ecommerce_c19/core/theme/colors.dart';
 import 'package:ecommerce_c19/features/common/widgets/route_logo.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,9 @@ class HomeHeader extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, AppRouter.cart);
+              },
               icon: const Icon(
                 Icons.shopping_cart_outlined,
                 color: AppColors.primary,

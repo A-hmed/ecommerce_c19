@@ -14,7 +14,7 @@ class CategoriesSection extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         if (state.categoriesApi.isSuccess) {
-          return buildCategoriesView(state.categoriesApi.data!);
+          return buildCategoriesView(context, state.categoriesApi.data!);
         } else if (state.categoriesApi.hasError) {
           return SizedBox.shrink();
         } else {
@@ -24,7 +24,7 @@ class CategoriesSection extends StatelessWidget {
     );
   }
 
-  buildCategoriesView(List<Category> categories) => Column(
+  buildCategoriesView(BuildContext context, List<Category> categories) => Column(
     children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,7 +48,7 @@ class CategoriesSection extends StatelessWidget {
       ),
       const SizedBox(height: 8),
       SizedBox(
-        height: 210,
+        height: MediaQuery.of(context).size.height * .24,
         child: GridView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: categories.length,
@@ -56,7 +56,7 @@ class CategoriesSection extends StatelessWidget {
             crossAxisCount: 2,
             mainAxisSpacing: 16,
             crossAxisSpacing: 12,
-            childAspectRatio: 1.15,
+            childAspectRatio: 1.05,
           ),
           itemBuilder: (context, index) {
             return CategoryItem(category: categories[index]);

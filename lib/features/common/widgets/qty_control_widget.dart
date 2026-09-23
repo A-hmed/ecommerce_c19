@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class QtyControlWidget extends StatelessWidget {
   final int qty;
-  final ValueChanged<int> onPlusClick;
-  final ValueChanged<int> onMinusClick;
+  final ValueChanged<int>? onPlusClick;
+  final ValueChanged<int>? onMinusClick;
 
   const QtyControlWidget({
     super.key,
@@ -17,14 +17,15 @@ class QtyControlWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: onMinusClick == null? AppColors.grey: AppColors.primary,
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildIconButton(icon: Icons.remove, onTap: () => onMinusClick(qty)),
+          _buildIconButton(icon: Icons.remove, onTap: () => onMinusClick?.call(qty)),
           const SizedBox(width: 16),
           Text(
             qty.toString(),
@@ -35,7 +36,7 @@ class QtyControlWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-          _buildIconButton(icon: Icons.add, onTap: () => onPlusClick(qty)),
+          _buildIconButton(icon: Icons.add, onTap: () => onPlusClick?.call(qty)),
         ],
       ),
     );

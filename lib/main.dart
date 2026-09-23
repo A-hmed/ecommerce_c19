@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Widget -> ViewModel -> Usecase -> Repository -> RemoteDataSource
 void main() async {
+  ///List - Set - Map
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   SharedPrefUtils prefUtils = getIt();
@@ -33,3 +34,21 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// dart basics -> data types - operators - loops - arrays - functions
+/// OOP - SOLID
+/// Algorithims - Data structures
+/// Design patterns (MVVM - MVI - DI - REPOSITORY)
+/// GANG OF FOUR(CREATIONAL - Behavrial - STRUCTURAL)
+///
+/// Flutter ->
+/// Widgets
+/// State managments(set state - bloc - cubit - provider - riverpod - get x )
+/// Futures - Streams
+/// Firebase -> (Analytics - Crashlytics - Auth - Firestore - cloud messaging - App dist.)
+/// Clean arch
+/// Netowrking(http - dio - retrofit)
+/// Testing(unit - integration - widget)
+/// Payments(Paymob - amazon - fawry - Tamara)
+/// CI/CD

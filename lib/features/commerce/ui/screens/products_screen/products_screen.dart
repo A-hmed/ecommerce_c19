@@ -1,4 +1,5 @@
 import 'package:ecommerce_c19/core/di/di.dart';
+import 'package:ecommerce_c19/core/routes/app_router.dart';
 import 'package:ecommerce_c19/core/theme/colors.dart';
 import 'package:ecommerce_c19/features/commerce/domain/entity/category.dart';
 import 'package:ecommerce_c19/features/commerce/ui/screens/main_tabs_screen/tabs/home/widgets/product_card.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsScreen extends StatefulWidget {
   final Category category;
-  final Category subCategory;
+  final Category? subCategory;
 
   const ProductsScreen({
     super.key,
@@ -30,7 +31,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     super.initState();
     _cubit.loadProducts(
       categoryId: widget.category.id,
-      subCategoryId: widget.subCategory.id,
+      subCategoryId: widget.subCategory?.id,
     );
   }
 
@@ -42,7 +43,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
         backgroundColor: AppColors.white,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -62,7 +66,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         ),
                       ),
                     ],
-                    const RouteLogo(width: 66, height: 22, color: AppColors.primary),
+                    const RouteLogo(
+                      width: 66,
+                      height: 22,
+                      color: AppColors.primary,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -74,19 +82,28 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         decoration: BoxDecoration(
                           color: AppColors.white,
                           borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: AppColors.primary, width: 1),
+                          border: Border.all(
+                            color: AppColors.primary,
+                            width: 1,
+                          ),
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
                           children: [
-                            const Icon(Icons.search, color: AppColors.primary, size: 26),
+                            const Icon(
+                              Icons.search,
+                              color: AppColors.primary,
+                              size: 26,
+                            ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: TextField(
                                 decoration: InputDecoration(
                                   hintText: 'what do you search for?',
                                   hintStyle: TextStyle(
-                                    color: AppColors.primary.withValues(alpha: 0.6),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.6,
+                                    ),
                                     fontSize: 14,
                                   ),
                                   border: InputBorder.none,
@@ -100,7 +117,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ),
                     const SizedBox(width: 16),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, AppRouter.cart);
+                      },
                       icon: const Icon(
                         Icons.shopping_cart_outlined,
                         color: AppColors.primary,
@@ -116,7 +135,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     builder: (context, state) {
                       if (state.productsApi.isLoading) {
                         return const Center(
-                          child: CircularProgressIndicator(color: AppColors.primary),
+                          child: CircularProgressIndicator(
+                            color: AppColors.primary,
+                          ),
                         );
                       }
 
@@ -128,20 +149,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.error_outline,
-                                  color: AppColors.error, size: 36),
+                              const Icon(
+                                Icons.error_outline,
+                                color: AppColors.error,
+                                size: 36,
+                              ),
                               const SizedBox(height: 12),
                               Text(
                                 error,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                    fontSize: 14, color: AppColors.error),
+                                  fontSize: 14,
+                                  color: AppColors.error,
+                                ),
                               ),
                               const SizedBox(height: 12),
                               ElevatedButton(
                                 onPressed: () => _cubit.loadProducts(
                                   categoryId: widget.category.id,
-                                  subCategoryId: widget.subCategory.id,
+                                  subCategoryId: widget.subCategory?.id,
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.primary,
@@ -173,11 +199,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         itemCount: products.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                          mainAxisExtent: 260,
-                        ),
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              mainAxisExtent: 260,
+                            ),
                         itemBuilder: (context, index) {
                           return ProductCard(product: products[index]);
                         },

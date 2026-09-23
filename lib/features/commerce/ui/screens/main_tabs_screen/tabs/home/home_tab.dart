@@ -45,6 +45,12 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => _cubit,
@@ -67,5 +73,10 @@ class _HomeTabState extends State<HomeTab> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }

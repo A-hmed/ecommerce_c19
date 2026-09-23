@@ -12,7 +12,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   Future<void> loadProducts({
     required String categoryId,
-    required String subCategoryId,
+    required String? subCategoryId,
   }) async {
     emit(state.copyWith(productsApi: Resource.loading()));
     var result = await _getProductsUseCase(

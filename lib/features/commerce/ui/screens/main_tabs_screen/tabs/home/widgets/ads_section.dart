@@ -26,7 +26,7 @@ class _AdsSectionState extends State<AdsSection> {
     return Column(
       children: [
         SizedBox(
-          height: 150,
+          height: 160,
           child: PageView.builder(
             controller: _adPageController,
             itemCount: widget.ads.length,
